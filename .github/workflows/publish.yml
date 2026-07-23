@@ -1,0 +1,58 @@
+name: Publish Agent Venue Radar
+
+on:
+  push:
+    tags:
+      - v0.2.0
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release-and-register:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@v4
+
+      - name: Verify the frozen release
+        run: |
+          test "${GITHUB_REF_NAME}" = "v0.2.0"
+          python3 -m unittest discover -s tests -v
+          sha256sum --check dist/SHA256SUMS
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          metadata = json.loads(Path("server.json").read_text(encoding="utf-8"))
+          assert metadata["version"] == "0.2.0"
+          assert metadata["packages"][0]["identifier"].endswith(
+              "/releases/download/v0.2.0/agent-venue-radar-0.2.0.mcpb"
+          )
+          PY
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            dist/agent-venue-radar-0.2.0.mcpb \
+            dist/SHA256SUMS \
+            --verify-tag \
+            --title "Agent Venue Radar v0.2.0" \
+            --generate-notes
+
+      - name: Install the pinned MCP publisher
+        run: |
+          curl --fail --location \
+            --output /tmp/mcp-publisher.tar.gz \
+            https://github.com/modelcontextprotocol/registry/releases/download/v1.7.9/mcp-publisher_linux_amd64.tar.gz
+          echo "ab128162b0616090b47cf245afe0a23f3ef08936fdce19074f5ba0a4469281ac  /tmp/mcp-publisher.tar.gz" \
+            | sha256sum --check -
+          tar -xzf /tmp/mcp-publisher.tar.gz -C /tmp mcp-publisher
+
+      - name: Publish to the official MCP Registry
+        run: |
+          /tmp/mcp-publisher login github-oidc
+          /tmp/mcp-publisher publish

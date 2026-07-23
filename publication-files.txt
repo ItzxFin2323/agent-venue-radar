@@ -1,3 +1,4 @@
+.github/workflows/publish.yml
 .mcpbignore
 LICENSE
 README.md

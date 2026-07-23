@@ -70,6 +70,23 @@ class PublicationPayloadTests(unittest.TestCase):
             hashlib.sha256(bundles[0].read_bytes()).hexdigest(),
         )
 
+    def test_publish_workflow_is_pinned_to_the_frozen_release(self):
+        workflow = (ROOT / ".github" / "workflows" / "publish.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("      - v0.2.0", workflow)
+        self.assertIn("  contents: write", workflow)
+        self.assertIn("  id-token: write", workflow)
+        self.assertIn("sha256sum --check dist/SHA256SUMS", workflow)
+        self.assertIn("releases/download/v1.7.9/", workflow)
+        self.assertIn(
+            "ab128162b0616090b47cf245afe0a23f3ef08936fdce19074f5ba0a4469281ac",
+            workflow,
+        )
+        self.assertIn("/tmp/mcp-publisher login github-oidc", workflow)
+        self.assertIn("/tmp/mcp-publisher publish", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
