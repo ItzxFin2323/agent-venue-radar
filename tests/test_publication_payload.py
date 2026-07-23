@@ -78,12 +78,17 @@ class PublicationPayloadTests(unittest.TestCase):
         self.assertIn("      - v0.2.0", workflow)
         self.assertIn("  contents: write", workflow)
         self.assertIn("  id-token: write", workflow)
-        self.assertIn("sha256sum --check dist/SHA256SUMS", workflow)
+        self.assertIn("(cd dist && sha256sum --check SHA256SUMS)", workflow)
         self.assertIn("releases/download/v1.7.9/", workflow)
         self.assertIn(
             "ab128162b0616090b47cf245afe0a23f3ef08936fdce19074f5ba0a4469281ac",
             workflow,
         )
+        self.assertIn(
+            'gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1', workflow
+        )
+        self.assertIn('gh release upload "${GITHUB_REF_NAME}"', workflow)
+        self.assertIn("--clobber", workflow)
         self.assertIn("/tmp/mcp-publisher login github-oidc", workflow)
         self.assertIn("/tmp/mcp-publisher publish", workflow)
 

@@ -20,7 +20,7 @@ jobs:
         run: |
           test "${GITHUB_REF_NAME}" = "v0.2.0"
           python3 -m unittest discover -s tests -v
-          sha256sum --check dist/SHA256SUMS
+          (cd dist && sha256sum --check SHA256SUMS)
           python3 - <<'PY'
           import json
           from pathlib import Path
@@ -36,12 +36,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" \
+          if ! gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release create "${GITHUB_REF_NAME}" \
+              --verify-tag \
+              --title "Agent Venue Radar v0.2.0" \
+              --generate-notes
+          fi
+          gh release upload "${GITHUB_REF_NAME}" \
             dist/agent-venue-radar-0.2.0.mcpb \
             dist/SHA256SUMS \
-            --verify-tag \
-            --title "Agent Venue Radar v0.2.0" \
-            --generate-notes
+            --clobber
 
       - name: Install the pinned MCP publisher
         run: |
