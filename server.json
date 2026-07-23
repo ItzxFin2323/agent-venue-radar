@@ -12,7 +12,7 @@
     {
       "registryType": "mcpb",
       "identifier": "https://github.com/ItzxFin2323/agent-venue-radar/releases/download/v0.2.0/agent-venue-radar-0.2.0.mcpb",
-      "fileSha256": "356e655af1bf6b8b44e48c655649962a29a9ce3f3a406b8785ed8132c3d4d34b",
+      "fileSha256": "5e404af8d406db839aaf82cfc359243dea5cb1bf2fe1b1f008f7d0a6c89d8f60",
       "transport": {
         "type": "stdio"
       }

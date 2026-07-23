@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
+from datetime import date
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parent
@@ -91,6 +94,8 @@ HARD_BLOCKERS = {
     "security": {"critical"},
 }
 
+VENUE_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
 
 class RadarError(ValueError):
     """Raised when data or CLI input is invalid."""
@@ -110,6 +115,11 @@ def load_data(path: Path) -> dict[str, Any]:
 def validate_data(data: dict[str, Any]) -> None:
     if data.get("schema_version") != 1:
         raise RadarError("unsupported or missing schema_version")
+    snapshot_date = data.get("snapshot_date")
+    validate_date(snapshot_date, "snapshot_date")
+    limitations = data.get("limitations")
+    if not isinstance(limitations, str) or not limitations.strip():
+        raise RadarError("limitations must be a non-empty string")
     venues = data.get("venues")
     if not isinstance(venues, list) or not venues:
         raise RadarError("venues must be a non-empty list")
@@ -117,17 +127,38 @@ def validate_data(data: dict[str, Any]) -> None:
     seen: set[str] = set()
     for index, venue in enumerate(venues):
         prefix = f"venues[{index}]"
-        for key in ("id", "name", "checked_at", "signals", "evidence", "sources"):
+        if not isinstance(venue, dict):
+            raise RadarError(f"{prefix} must be an object")
+        for key in (
+            "id",
+            "name",
+            "checked_at",
+            "signals",
+            "conditions",
+            "evidence",
+            "sources",
+        ):
             if key not in venue:
                 raise RadarError(f"{prefix} is missing {key}")
         venue_id = venue["id"]
-        if not isinstance(venue_id, str) or not venue_id:
-            raise RadarError(f"{prefix}.id must be a non-empty string")
+        if not isinstance(venue_id, str) or not VENUE_ID.fullmatch(venue_id):
+            raise RadarError(f"{prefix}.id must be a lowercase slug")
         if venue_id in seen:
             raise RadarError(f"duplicate venue id: {venue_id}")
         seen.add(venue_id)
 
+        if not isinstance(venue["name"], str) or not venue["name"].strip():
+            raise RadarError(f"{prefix}.name must be a non-empty string")
+        validate_date(venue["checked_at"], f"{prefix}.checked_at")
+
         signals = venue["signals"]
+        if not isinstance(signals, dict):
+            raise RadarError(f"{prefix}.signals must be an object")
+        extra_signals = sorted(set(signals) - set(CRITERIA))
+        if extra_signals:
+            raise RadarError(
+                f"{prefix}.signals has unknown criteria: {', '.join(extra_signals)}"
+            )
         for criterion, rule in CRITERIA.items():
             value = signals.get(criterion)
             if value not in rule["values"]:
@@ -135,8 +166,42 @@ def validate_data(data: dict[str, Any]) -> None:
                 raise RadarError(
                     f"{prefix}.signals.{criterion}={value!r}; expected one of {allowed}"
                 )
-        if not isinstance(venue["sources"], list) or not venue["sources"]:
+
+        conditions = venue["conditions"]
+        if not is_non_empty_string_list(conditions):
+            raise RadarError(
+                f"{prefix}.conditions must contain at least one non-empty string"
+            )
+        if not isinstance(venue["evidence"], str) or not venue["evidence"].strip():
+            raise RadarError(f"{prefix}.evidence must be a non-empty string")
+        sources = venue["sources"]
+        if not is_non_empty_string_list(sources):
             raise RadarError(f"{prefix}.sources must contain at least one citation")
+        for source_index, source in enumerate(sources):
+            parsed = urlparse(source)
+            if parsed.scheme != "https" or not parsed.netloc:
+                raise RadarError(
+                    f"{prefix}.sources[{source_index}] must be an HTTPS URL"
+                )
+
+
+def validate_date(value: Any, field: str) -> None:
+    if not isinstance(value, str):
+        raise RadarError(f"{field} must be an ISO date")
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError as exc:
+        raise RadarError(f"{field} must be an ISO date") from exc
+    if parsed.isoformat() != value:
+        raise RadarError(f"{field} must be an ISO date")
+
+
+def is_non_empty_string_list(value: Any) -> bool:
+    return (
+        isinstance(value, list)
+        and bool(value)
+        and all(isinstance(item, str) and bool(item.strip()) for item in value)
+    )
 
 
 def evaluate(signals: dict[str, str]) -> dict[str, Any]:

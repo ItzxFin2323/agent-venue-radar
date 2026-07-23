@@ -1,4 +1,5 @@
 import importlib.util
+import copy
 import json
 import subprocess
 import sys
@@ -35,6 +36,26 @@ class RadarTests(unittest.TestCase):
         ]
         self.assertEqual([result["id"] for result in survivors], ["taskmarket"])
         self.assertEqual(survivors[0]["verdict"], "continue_with_conditions")
+
+    def test_dataset_contract_rejects_uncited_or_malformed_maintenance(self):
+        cases = (
+            ("checked_at", "July 23, 2026", "must be an ISO date"),
+            ("sources", ["not-a-url"], "must be an HTTPS URL"),
+            ("evidence", "", "must be a non-empty string"),
+            ("conditions", [], "must contain at least one"),
+        )
+        for field, value, message in cases:
+            with self.subTest(field=field):
+                malformed = copy.deepcopy(self.data)
+                malformed["venues"][0][field] = value
+                with self.assertRaisesRegex(radar.RadarError, message):
+                    radar.validate_data(malformed)
+
+    def test_dataset_contract_rejects_unknown_signal_criteria(self):
+        malformed = copy.deepcopy(self.data)
+        malformed["venues"][0]["signals"]["reputation"] = "excellent"
+        with self.assertRaisesRegex(radar.RadarError, "unknown criteria: reputation"):
+            radar.validate_data(malformed)
 
     def test_real_escrow_does_not_override_negative_economics(self):
         venue = radar.find_venue(self.data["venues"], "agentbounties")
