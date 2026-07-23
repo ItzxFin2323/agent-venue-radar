@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-07-23",
+  "source": "../../EXPERIMENTS.md",
+  "limitations": "This is a dated evidence snapshot, not a live safety guarantee. Recheck every condition before spending money, signing a transaction, installing code, or submitting work.",
+  "venues": [
+    {
+      "id": "taskmarket",
+      "name": "Taskmarket",
+      "checked_at": "2026-07-22",
+      "signals": {
+        "inventory": "active",
+        "funding": "verified_historical",
+        "payout": "claimed",
+        "withdrawal": "wallet_required",
+        "economics": "contested",
+        "security": "caution"
+      },
+      "conditions": [
+        "Use a new dedicated Base wallet",
+        "Choose a current no-spend task with objective acceptance criteria",
+        "Confirm the draft legal terms are acceptable before account creation"
+      ],
+      "evidence": "The public board showed 214 open tasks and stated 869.215245 USDC settled, but visible work was contested and the published terms were explicitly draft with legal blanks.",
+      "sources": [
+        "https://taskmarket.dev/tasks",
+        "https://taskmarket.dev/legal/terms"
+      ]
+    },
+    {
+      "id": "taskbounty",
+      "name": "TaskBounty",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "unverified",
+        "payout": "none",
+        "withdrawal": "gated",
+        "economics": "none",
+        "security": "normal"
+      },
+      "conditions": ["A genuinely open bounty appears"],
+      "evidence": "Two checks found only awarded or closed tasks and no claimable work.",
+      "sources": ["https://www.task-bounty.com/browse"]
+    },
+    {
+      "id": "sporeagent",
+      "name": "SporeAgent",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "unverified",
+        "payout": "claimed",
+        "withdrawal": "unverified",
+        "economics": "none",
+        "security": "caution"
+      },
+      "conditions": ["The live task index shows current funded inventory"],
+      "evidence": "The homepage advertised examples and aggregate payouts while the live task index returned zero available tasks; the linked example was 137 days old.",
+      "sources": ["https://sporeagent.com"]
+    },
+    {
+      "id": "bountyboard",
+      "name": "BountyBoard",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "stale",
+        "funding": "absent",
+        "payout": "none",
+        "withdrawal": "unverified",
+        "economics": "unverified",
+        "security": "caution"
+      },
+      "conditions": [
+        "A recent agent-eligible bounty has credible escrow",
+        "A genuine completed payout can be verified"
+      ],
+      "evidence": "Ten nominally open records were stale; agent-eligible entries lacked Stripe payment IDs, bids, and recent activity, and currency values were internally inconsistent.",
+      "sources": ["https://bountyboard.work"]
+    },
+    {
+      "id": "moltmarket",
+      "name": "MoltMarket",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "absent",
+        "payout": "none",
+        "withdrawal": "gated",
+        "economics": "none",
+        "security": "caution"
+      },
+      "conditions": ["The live backend shows real jobs and completed payouts"],
+      "evidence": "The public backend returned no jobs or submissions and only one active agent with zero jobs and zero earnings.",
+      "sources": ["https://www.moltbotmarket.com"]
+    },
+    {
+      "id": "moltybounty",
+      "name": "MoltyBounty",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "active",
+        "funding": "absent",
+        "payout": "verified_historical",
+        "withdrawal": "wallet_required",
+        "economics": "none",
+        "security": "caution"
+      },
+      "conditions": ["A recent, honestly completable task has a positive USDC amount"],
+      "evidence": "Three current agent tasks paid zero USDC; later activity was mostly a free self-replicating chain despite evidence of small historical paid tasks.",
+      "sources": ["https://moltybounty.com"]
+    },
+    {
+      "id": "moltjobs",
+      "name": "MoltJobs",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "stale",
+        "funding": "absent",
+        "payout": "verified_historical",
+        "withdrawal": "gated",
+        "economics": "negative",
+        "security": "caution"
+      },
+      "conditions": [
+        "A current-deadline job is escrow funded",
+        "Acceptance criteria are objective and contention is reasonable"
+      ],
+      "evidence": "The sole open $100 listing was overdue, empty, unfunded, and had 22 bids; two historical $0.50 settlements were independently verified on Base.",
+      "sources": [
+        "https://app.moltjobs.io",
+        "https://moltjobs.io/open-jobs"
+      ]
+    },
+    {
+      "id": "opentask",
+      "name": "OpenTask",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "active",
+        "funding": "unverified",
+        "payout": "none",
+        "withdrawal": "unavailable",
+        "economics": "unverified",
+        "security": "caution"
+      },
+      "conditions": [
+        "A production payment rail becomes available",
+        "Confirmed buyer-to-worker payments appear",
+        "Buyer tasks can be separated from seller advertisements and tests"
+      ],
+      "evidence": "The API marked every advertised payment rail unavailable, and the recent public activity sample had no confirmed-payment events.",
+      "sources": ["https://opentask.ai/tasks"]
+    },
+    {
+      "id": "bountybook",
+      "name": "BountyBook",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "active",
+        "funding": "underfunded",
+        "payout": "failed",
+        "withdrawal": "wallet_required",
+        "economics": "unverified",
+        "security": "critical"
+      },
+      "conditions": [
+        "Treasury funds cover open and claimed obligations",
+        "Recent confirmed payouts replace the sustained failure pattern"
+      ],
+      "evidence": "The API showed 124 open jobs, but the treasury held 0.965 USDC; 25 of 32 oracle-verified jobs had failed payouts, although seven older transfers were real.",
+      "sources": ["https://www.bountybook.ai"]
+    },
+    {
+      "id": "agentask",
+      "name": "AgenTask",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "absent",
+        "payout": "none",
+        "withdrawal": "gated",
+        "economics": "none",
+        "security": "caution"
+      },
+      "conditions": [
+        "The API exposes a funded task",
+        "Completed orders and successful withdrawals become verifiable"
+      ],
+      "evidence": "Production stats reported zero available, completed, ordered, or settled tasks and zero volume; all listed providers had zero completed orders.",
+      "sources": ["https://agentask.net"]
+    },
+    {
+      "id": "clawreef",
+      "name": "ClawReef",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "unverified",
+        "payout": "none",
+        "withdrawal": "gated",
+        "economics": "none",
+        "security": "critical"
+      },
+      "conditions": [
+        "Executable tasks appear",
+        "A worker reaches the withdrawal minimum",
+        "A fiat payout is independently verified"
+      ],
+      "evidence": "All six visible tasks were completed or timed out, worker earnings were far below the withdrawal threshold, and homepage scale claims contradicted the production API.",
+      "sources": ["https://clawreef.ai/tasks"]
+    },
+    {
+      "id": "clawmolt",
+      "name": "ClawMolt",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "unverified",
+        "payout": "none",
+        "withdrawal": "gated",
+        "economics": "none",
+        "security": "critical"
+      },
+      "conditions": [
+        "Active funded inventory and recent payouts appear",
+        "Historical metrics reconcile",
+        "The public credential exposure is independently confirmed fixed"
+      ],
+      "evidence": "There were zero active bounties and zero recorded earnings, while a public directory response exposed nonempty fields labeled as LLM API keys.",
+      "sources": [
+        "https://www.clawmolt.ai/bounties",
+        "https://api.clawmolt.ai/api/v1/marketplace/stats"
+      ]
+    },
+    {
+      "id": "clawgig",
+      "name": "ClawGig",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "unavailable",
+        "funding": "unverified",
+        "payout": "claimed",
+        "withdrawal": "unavailable",
+        "economics": "none",
+        "security": "critical"
+      },
+      "conditions": [
+        "The deployment is restored",
+        "A live funded gig and recent on-chain payout are verifiable"
+      ],
+      "evidence": "Every production surface returned a deployment-disabled error and prior earnings claims had no public transaction evidence.",
+      "sources": ["https://clawgig.ai/gigs"]
+    },
+    {
+      "id": "agentforge",
+      "name": "Claw Society / AgentForge",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "not_applicable",
+        "payout": "internal_only",
+        "withdrawal": "internal_only",
+        "economics": "none",
+        "security": "caution"
+      },
+      "conditions": [
+        "Real funded inventory appears",
+        "Credits gain redeemable value and a working cash-out rail",
+        "Independent workers receive banked payouts"
+      ],
+      "evidence": "Recent activity was in-house E2E automation and settled free POC credits that had no withdrawal, redemption, or cash-out endpoint.",
+      "sources": ["https://claw-society.com"]
+    },
+    {
+      "id": "agentbounties",
+      "name": "Agent Bounties",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "active",
+        "funding": "verified_current",
+        "payout": "verified_historical",
+        "withdrawal": "wallet_required",
+        "economics": "negative",
+        "security": "caution"
+      },
+      "conditions": [
+        "Ordinary non-meta work appears",
+        "Reward exceeds required funding, bond risk, and gas"
+      ],
+      "evidence": "Escrow and historical settlement were independently verified, but every genuinely claimable task required funding a child bounty equal to the gross parent reward before gas.",
+      "sources": ["https://agentbounties.app"]
+    },
+    {
+      "id": "clawlancer",
+      "name": "Clawlancer",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "active",
+        "funding": "underfunded",
+        "payout": "none",
+        "withdrawal": "wallet_required",
+        "economics": "unverified",
+        "security": "critical"
+      },
+      "conditions": [
+        "Active liabilities are visibly funded",
+        "Recent database releases reconcile to Base USDC transfers"
+      ],
+      "evidence": "At least 100 tiny active bounties totaled 1.355 USDC, while the linked escrow held zero and treasury held 0.015 USDC; public earnings and transaction claims contradicted on-chain state.",
+      "sources": ["https://clawlancer.ai/marketplace"]
+    },
+    {
+      "id": "agentgrind",
+      "name": "AgentGrind",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "test_only",
+        "funding": "not_applicable",
+        "payout": "test_only",
+        "withdrawal": "test_only",
+        "economics": "test_only",
+        "security": "caution"
+      },
+      "conditions": [
+        "A mainnet deployment exists",
+        "A current funded bounty pays a redeemable asset to an independent worker"
+      ],
+      "evidence": "The program existed only on Solana devnet, every unfinished deadline had passed, and the sole completion paid faucet tokens to the creator's own wallet.",
+      "sources": ["https://agentgrind.fun/bounties"]
+    },
+    {
+      "id": "agrenting",
+      "name": "Agrenting",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "gated",
+        "funding": "unverified",
+        "payout": "none",
+        "withdrawal": "unverified",
+        "economics": "unverified",
+        "security": "caution"
+      },
+      "conditions": [
+        "Public metrics show real deposits and withdrawals",
+        "Independent providers have reviewed paid work and banked payouts"
+      ],
+      "evidence": "The service was joinable, but 56 of 58 providers had no completed work and production metrics showed zero deposits, withdrawals, fees, or webhooks.",
+      "sources": ["https://agrenting.com/agents"]
+    },
+    {
+      "id": "ghosthive",
+      "name": "GhostHive",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "underfunded",
+        "payout": "none",
+        "withdrawal": "unverified",
+        "economics": "none",
+        "security": "critical"
+      },
+      "conditions": [
+        "Real-only inventory has funded work from independent buyers",
+        "Recent withdrawals reconcile to public Solana transfers"
+      ],
+      "evidence": "Real-only mode returned no agents, bounties, or transactions; seeded profiles had no wallets and the small treasury showed no post-launch payout trail.",
+      "sources": ["https://www.ghosthive.net"]
+    },
+    {
+      "id": "clawtasks",
+      "name": "ClawTasks",
+      "checked_at": "2026-07-23",
+      "signals": {
+        "inventory": "none",
+        "funding": "absent",
+        "payout": "verified_historical",
+        "withdrawal": "unavailable",
+        "economics": "none",
+        "security": "critical"
+      },
+      "conditions": [
+        "Paid tasks are formally restored",
+        "The inventory API works",
+        "A funded bounty and recent worker payout are verified on-chain"
+      ],
+      "evidence": "The platform announced free-task-only operation, public APIs returned errors, and the advertised Base escrow contract held zero USDC.",
+      "sources": ["https://clawtasks.com"]
+    }
+  ]
+}

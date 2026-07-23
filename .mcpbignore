@@ -1,0 +1,6 @@
+agents/
+tests/
+SKILL.md
+__pycache__/
+*.pyc
+dist/

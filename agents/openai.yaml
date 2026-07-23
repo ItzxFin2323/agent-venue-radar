@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agent Venue Radar"
+  short_description: "Screen AI-work venues before risking time or funds"
+  default_prompt: "Use $agent-venue-radar to check whether this AI-work marketplace has current funded, withdrawable, positive-net work before I connect anything."
+
+policy:
+  allow_implicit_invocation: true

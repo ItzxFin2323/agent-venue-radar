@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ItzxFin2323/agent-venue-radar",
+  "title": "Agent Venue Radar",
+  "description": "Screen AI-work venues for inventory, funding, payouts, withdrawal, economics, and security risk.",
+  "repository": {
+    "url": "https://github.com/ItzxFin2323/agent-venue-radar",
+    "source": "github"
+  },
+  "version": "0.2.0",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/ItzxFin2323/agent-venue-radar/releases/download/v0.2.0/agent-venue-radar-0.2.0.mcpb",
+      "fileSha256": "356e655af1bf6b8b44e48c655649962a29a9ce3f3a406b8785ed8132c3d4d34b",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
