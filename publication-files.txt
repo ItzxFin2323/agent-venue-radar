@@ -1,6 +1,9 @@
+.github/ISSUE_TEMPLATE/custom-venue-audit.yml
+.github/workflows/audit-intake.yml
 .github/workflows/publish.yml
 .mcpbignore
 LICENSE
+PAID_AUDITS.md
 README.md
 SKILL.md
 agents/openai.yaml
@@ -14,6 +17,7 @@ radar.py
 server.json
 tests/test_mcp_server.py
 tests/test_mcpb_package.py
+tests/test_paid_audit_offer.py
 tests/test_publication_payload.py
 tests/test_radar.py
 tests/test_registry_metadata.py

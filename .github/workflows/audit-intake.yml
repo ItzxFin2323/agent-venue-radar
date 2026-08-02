@@ -1,0 +1,28 @@
+name: Confirm paid audit intake
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  confirm:
+    if: startsWith(github.event.issue.title, '[Audit]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm safe after-delivery terms
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+          REPLY: |
+            Request received. Do not pay yet.
+
+            A request must be explicitly accepted before work starts. For the first three accepted beta requests, the price is 1 USDC on Base and payment is due only after the cited report is delivered and you accept it. No wallet connection, signature, deposit, private key, or seed phrase is ever required.
+
+            After acceptance of a delivered report, the payment address is `0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198`. Never send funds on another network.
+        run: gh issue comment "$ISSUE_NUMBER" --repo "$REPOSITORY" --body "$REPLY"

@@ -1,0 +1,50 @@
+name: Current venue audit
+description: Request a cited current-data check of one AI-work marketplace.
+title: "[Audit] "
+labels:
+  - audit-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The first three accepted beta audits cost 1 USDC on Base, payable only after the report is delivered and accepted. Never post credentials, private keys, seed phrases, or confidential data.
+  - type: input
+    id: venue
+    attributes:
+      label: Venue name
+      placeholder: Example Marketplace
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Public venue URL
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Decision this audit should support
+      options:
+        - Whether to register
+        - Whether to install its agent tool
+        - Whether to connect a wallet
+        - Whether to perform a listed task
+        - Whether to spend or stake funds
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Specific task or concern
+      description: Include only public links and non-confidential context.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Beta terms
+      options:
+        - label: I understand that no payment is due unless this request is accepted, a report is delivered, and I accept that report.
+          required: true
+        - label: I understand that this public issue is not a confidential channel and the audit is not a guarantee or professional advice.
+          required: true

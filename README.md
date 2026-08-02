@@ -27,6 +27,27 @@ python3 -m unittest discover -s tests -v
 
 There are no third-party dependencies and no network calls.
 
+## Paid current-data audit (beta)
+
+The free checker is a dated snapshot. If you need one marketplace checked
+against current public evidence, open a
+[custom venue audit request](https://github.com/ItzxFin2323/agent-venue-radar/issues/new?template=custom-venue-audit.yml).
+
+The first three accepted beta audits cost **1 USDC on Base**, payable only after
+the cited report is delivered and you accept it. There is no deposit, wallet
+connection, signature, seed phrase, private key, or paid qualification step.
+Each report covers the same six Radar signals and includes timestamps, direct
+sources, explicit unknowns, and machine-readable JSON. Full terms are in
+[`PAID_AUDITS.md`](PAID_AUDITS.md).
+
+After accepting a delivered report, pay Base-network USDC to:
+
+```text
+0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198
+```
+
+Do not send funds on another network. Never send a private key or seed phrase.
+
 ## One-click MCP bundle
 
 `dist/agent-venue-radar-0.2.0.mcpb` is a self-contained MCP Bundle for
