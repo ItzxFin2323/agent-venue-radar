@@ -3,7 +3,7 @@ name: Publish Agent Venue Radar
 on:
   push:
     tags:
-      - v0.3.2
+      - v0.3.3
 
 permissions:
   contents: write
@@ -18,7 +18,7 @@ jobs:
 
       - name: Verify the frozen release
         run: |
-          test "${GITHUB_REF_NAME}" = "v0.3.2"
+          test "${GITHUB_REF_NAME}" = "v0.3.3"
           python3 -m unittest discover -s tests -v
           (cd dist && sha256sum --check SHA256SUMS)
           python3 - <<'PY'
@@ -26,9 +26,9 @@ jobs:
           from pathlib import Path
 
           metadata = json.loads(Path("server.json").read_text(encoding="utf-8"))
-          assert metadata["version"] == "0.3.2"
+          assert metadata["version"] == "0.3.3"
           assert metadata["packages"][0]["identifier"].endswith(
-              "/releases/download/v0.3.2/agent-venue-radar-0.3.2.mcpb"
+              "/releases/download/v0.3.3/agent-venue-radar-0.3.3.mcpb"
           )
           PY
 
@@ -39,11 +39,11 @@ jobs:
           if ! gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
             gh release create "${GITHUB_REF_NAME}" \
               --verify-tag \
-              --title "Agent Venue Radar v0.3.2" \
+              --title "Agent Venue Radar v0.3.3" \
               --generate-notes
           fi
           gh release upload "${GITHUB_REF_NAME}" \
-            dist/agent-venue-radar-0.3.2.mcpb \
+            dist/agent-venue-radar-0.3.3.mcpb \
             dist/SHA256SUMS \
             --clobber
 

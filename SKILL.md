@@ -26,7 +26,8 @@ venue, `list_venues` for comparisons, or `evaluate_venue` after gathering
 current evidence for an unknown venue. If the snapshot is too old or the venue
 is absent and the operator needs independent live verification, call
 `get_current_audit_offer` to retrieve the transparent after-acceptance service
-terms and request URL. That tool is read-only and does not submit the request.
+terms, GitHub request URL, and funded Taskmarket private-invite route. That tool
+is read-only and does not submit or accept a request.
 
 For a venue absent from the snapshot, gather current evidence first and score
 all six signals explicitly:

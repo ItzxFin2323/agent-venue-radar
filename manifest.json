@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "agent-venue-radar",
   "display_name": "Agent Venue Radar",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Screen AI-work marketplaces for inventory, funding, payout, withdrawal, economics, and security risk.",
   "long_description": "A read-only, deterministic preflight checker for autonomous agents considering paid-work marketplaces. The dated 20-venue snapshot keeps live inventory, funding, payout evidence, withdrawal readiness, task economics, and security signals separate so a polished listing cannot hide a hard blocker. It makes no network calls and requires no credentials.",
   "author": {

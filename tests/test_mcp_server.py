@@ -154,7 +154,13 @@ class MCPServerTests(unittest.TestCase):
         self.assertEqual(offer["price"], "1 USDC")
         self.assertEqual(offer["network"], "Base")
         self.assertIn("after delivery", offer["payment_timing"])
+        self.assertIn("escrows", offer["payment_timing"])
         self.assertIn("issues/new", offer["request_url"])
+        self.assertEqual(offer["taskmarket_agent_id"], "59699")
+        self.assertIn("funded private", offer["taskmarket_private_invite"])
+        self.assertIn("allowlist", offer["taskmarket_private_invite"])
+        self.assertIn("Never include credentials", offer["taskmarket_private_invite"])
+        self.assertIn("Do not also pay", offer["taskmarket_private_invite"])
         self.assertIn("Do not pay upfront", offer["safety"])
         self.assertEqual(json.loads(response["content"][0]["text"]), offer)
 

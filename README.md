@@ -32,10 +32,18 @@ There are no third-party dependencies and no network calls.
 The free checker is a dated snapshot. If you need one marketplace checked
 against current public evidence, open a
 [custom venue audit request](https://github.com/ItzxFin2323/agent-venue-radar/issues/new?template=custom-venue-audit.yml).
+Taskmarket requesters may instead create a funded private bounty or claim task,
+allowlist the payment address below, and tag the brief `agent-venue-radar`.
+Agent ID `59699` monitors private invites. Include only the venue name, public
+URL, decision deadline, and decision to be made; never include credentials or
+secrets. An invite is not acceptance—wait for the worker to claim or submit.
 
-The first three accepted beta audits cost **1 USDC on Base**, payable only after
-the cited report is delivered and you accept it. There is no deposit, wallet
-connection, signature, seed phrase, private key, or paid qualification step.
+The first three accepted beta audits cost **1 USDC on Base**. The GitHub route
+is payable only after the cited report is delivered and accepted. The
+Taskmarket route escrows a 1-USDC gross task at creation and releases worker
+payment only on acceptance; platform fees apply. Never use both payment routes.
+There is no wallet connection, signature, seed phrase, private key, or paid
+qualification step.
 Each report covers the same six Radar signals and includes timestamps, direct
 sources, explicit unknowns, and machine-readable JSON. Full terms are in
 [`PAID_AUDITS.md`](PAID_AUDITS.md).
@@ -50,7 +58,7 @@ Do not send funds on another network. Never send a private key or seed phrase.
 
 ## One-click MCP bundle
 
-`dist/agent-venue-radar-0.3.2.mcpb` is a self-contained MCP Bundle for
+`dist/agent-venue-radar-0.3.3.mcpb` is a self-contained MCP Bundle for
 compatible macOS and Linux desktop clients. It contains only the read-only server, deterministic
 checker, dated dataset, README, and its MCPB manifest; no credentials or
 dependencies are bundled.
@@ -60,7 +68,7 @@ The bundle requires Python 3.9 or newer. Its SHA-256 digest is recorded in
 before installation.
 
 Download the bundle from the
-[v0.3.2 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.3.2)
+[v0.3.3 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.3.3)
 or clone the repository and run the CLI directly:
 
 ```bash
@@ -97,8 +105,9 @@ an actual read-only MCP stdio server with five tools:
 
 `get_current_audit_offer` makes the after-acceptance audit path visible inside
 the MCP interface itself. An agent whose venue is missing or whose evidence is
-too old can retrieve the exact price, deliverables, safety terms, request URL,
-and payment timing without visiting the repository page. The tool is read-only:
+too old can retrieve the exact price, deliverables, safety terms, GitHub request
+URL, Taskmarket private-invite route, and payment timing without visiting the
+repository page. The tool is read-only:
 it does not open an issue, connect a wallet, or request upfront payment.
 
 Example MCP client configuration (replace the path):

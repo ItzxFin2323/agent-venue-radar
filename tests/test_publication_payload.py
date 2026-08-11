@@ -56,7 +56,7 @@ class PublicationPayloadTests(unittest.TestCase):
         bundles = sorted((ROOT / "dist").glob("*.mcpb"))
         self.assertEqual(
             [path.name for path in bundles],
-            ["agent-venue-radar-0.3.2.mcpb"],
+            ["agent-venue-radar-0.3.3.mcpb"],
         )
 
         expected_line = (ROOT / "dist" / "SHA256SUMS").read_text(
@@ -75,7 +75,7 @@ class PublicationPayloadTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("      - v0.3.2", workflow)
+        self.assertIn("      - v0.3.3", workflow)
         self.assertIn("  contents: write", workflow)
         self.assertIn("  id-token: write", workflow)
         self.assertIn("(cd dist && sha256sum --check SHA256SUMS)", workflow)

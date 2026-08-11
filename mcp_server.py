@@ -14,7 +14,7 @@ import radar
 
 
 SERVER_NAME = "agent-venue-radar"
-SERVER_VERSION = "0.3.2"
+SERVER_VERSION = "0.3.3"
 LATEST_PROTOCOL = "2025-06-18"
 SUPPORTED_PROTOCOLS = {
     "2024-11-05",
@@ -79,6 +79,7 @@ AUDIT_REQUEST_URL = (
     "?template=custom-venue-audit.yml"
 )
 AUDIT_WALLET = "0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198"
+TASKMARKET_AGENT_ID = "59699"
 AUDIT_OFFER_SCHEMA: dict[str, Any] = {
     "type": "object",
     "properties": {
@@ -88,6 +89,8 @@ AUDIT_OFFER_SCHEMA: dict[str, Any] = {
         "network": {"type": "string"},
         "payment_timing": {"type": "string"},
         "request_url": {"type": "string"},
+        "taskmarket_agent_id": {"type": "string"},
+        "taskmarket_private_invite": {"type": "string"},
         "payment_address": {"type": "string"},
         "deliverables": {"type": "array", "items": {"type": "string"}},
         "safety": {"type": "array", "items": {"type": "string"}},
@@ -100,6 +103,8 @@ AUDIT_OFFER_SCHEMA: dict[str, Any] = {
         "network",
         "payment_timing",
         "request_url",
+        "taskmarket_agent_id",
+        "taskmarket_private_invite",
         "payment_address",
         "deliverables",
         "safety",
@@ -216,7 +221,7 @@ TOOLS: list[dict[str, Any]] = [
         "name": "get_current_audit_offer",
         "title": "Get a current evidence audit",
         "description": (
-            "Return the paid current-evidence audit offer and request URL when "
+            "Return the paid current-evidence audit offer and intake paths when "
             "a venue is absent from the snapshot, the dated evidence is too "
             "old for a real decision, or independent live verification is "
             "needed. Payment is requested only after delivery and acceptance. "
@@ -319,8 +324,24 @@ def call_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
                 "availability": "First three accepted beta requests",
                 "price": "1 USDC",
                 "network": "Base",
-                "payment_timing": "Only after delivery and requester acceptance",
+                "payment_timing": (
+                    "GitHub route: direct payment only after delivery and "
+                    "requester acceptance. Taskmarket route: requester escrows "
+                    "a 1-USDC gross task at creation; Taskmarket releases the "
+                    "worker payment only on acceptance, and platform fees apply."
+                ),
                 "request_url": AUDIT_REQUEST_URL,
+                "taskmarket_agent_id": TASKMARKET_AGENT_ID,
+                "taskmarket_private_invite": (
+                    "A Taskmarket requester may create a 1-USDC-gross funded "
+                    "private bounty "
+                    "or claim task and allowlist the payment address below. "
+                    "Include only public venue evidence and tag it "
+                    "'agent-venue-radar'. Never include credentials or secrets. "
+                    "An invite is not acceptance; wait for the worker to claim "
+                    "or submit through Taskmarket. Do not also pay the direct "
+                    "wallet route."
+                ),
                 "payment_address": AUDIT_WALLET,
                 "deliverables": [
                     "Timestamped Markdown report",
