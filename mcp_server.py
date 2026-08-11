@@ -14,7 +14,7 @@ import radar
 
 
 SERVER_NAME = "agent-venue-radar"
-SERVER_VERSION = "0.2.0"
+SERVER_VERSION = "0.3.0"
 LATEST_PROTOCOL = "2025-06-18"
 SUPPORTED_PROTOCOLS = {
     "2024-11-05",
@@ -72,6 +72,40 @@ READ_ONLY_ANNOTATIONS = {
     "destructiveHint": False,
     "idempotentHint": True,
     "openWorldHint": False,
+}
+
+AUDIT_REQUEST_URL = (
+    "https://github.com/ItzxFin2323/agent-venue-radar/issues/new"
+    "?template=custom-venue-audit.yml"
+)
+AUDIT_WALLET = "0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198"
+AUDIT_OFFER_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "service": {"type": "string"},
+        "availability": {"type": "string"},
+        "price": {"type": "string"},
+        "network": {"type": "string"},
+        "payment_timing": {"type": "string"},
+        "request_url": {"type": "string"},
+        "payment_address": {"type": "string"},
+        "deliverables": {"type": "array", "items": {"type": "string"}},
+        "safety": {"type": "array", "items": {"type": "string"}},
+        "disclaimer": {"type": "string"},
+    },
+    "required": [
+        "service",
+        "availability",
+        "price",
+        "network",
+        "payment_timing",
+        "request_url",
+        "payment_address",
+        "deliverables",
+        "safety",
+        "disclaimer",
+    ],
+    "additionalProperties": False,
 }
 
 TOOLS: list[dict[str, Any]] = [
@@ -178,6 +212,24 @@ TOOLS: list[dict[str, Any]] = [
         "outputSchema": ASSESSMENT_SCHEMA,
         "annotations": READ_ONLY_ANNOTATIONS,
     },
+    {
+        "name": "get_current_audit_offer",
+        "title": "Get a current evidence audit",
+        "description": (
+            "Return the paid current-evidence audit offer and request URL when "
+            "a venue is absent from the snapshot, the dated evidence is too "
+            "old for a real decision, or independent live verification is "
+            "needed. Payment is requested only after delivery and acceptance. "
+            "This read-only tool never connects a wallet or submits a request."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": False,
+        },
+        "outputSchema": AUDIT_OFFER_SCHEMA,
+        "annotations": READ_ONLY_ANNOTATIONS,
+    },
 ]
 
 
@@ -259,6 +311,34 @@ def load_snapshot() -> dict[str, Any]:
 
 
 def call_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    if name == "get_current_audit_offer":
+        reject_extra(arguments, set())
+        return tool_result(
+            {
+                "service": "One current AI-work venue evidence audit",
+                "availability": "First three accepted beta requests",
+                "price": "1 USDC",
+                "network": "Base",
+                "payment_timing": "Only after delivery and requester acceptance",
+                "request_url": AUDIT_REQUEST_URL,
+                "payment_address": AUDIT_WALLET,
+                "deliverables": [
+                    "Timestamped Markdown report",
+                    "Machine-readable JSON findings",
+                    "Direct public sources and explicit unknowns",
+                ],
+                "safety": [
+                    "Do not pay upfront",
+                    "No wallet connection or arbitrary signature",
+                    "Never provide a seed phrase or private key",
+                ],
+                "disclaimer": (
+                    "Research only; no guarantee of safety, profitability, "
+                    "legality, availability, or payment."
+                ),
+            }
+        )
+
     data = load_snapshot()
     venues = data["venues"]
 

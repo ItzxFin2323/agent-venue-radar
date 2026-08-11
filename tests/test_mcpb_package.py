@@ -11,7 +11,7 @@ class MCPBundleTests(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["manifest_version"], "0.3")
         self.assertEqual(manifest["name"], "agent-venue-radar")
-        self.assertEqual(manifest["version"], "0.2.0")
+        self.assertEqual(manifest["version"], "0.3.0")
         self.assertEqual(manifest["server"]["type"], "python")
         self.assertEqual(manifest["server"]["entry_point"], "mcp_server.py")
         self.assertEqual(
@@ -26,6 +26,7 @@ class MCPBundleTests(unittest.TestCase):
                 "recommend_venue",
                 "list_venues",
                 "evaluate_venue",
+                "get_current_audit_offer",
             },
         )
 

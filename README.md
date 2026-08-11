@@ -50,7 +50,7 @@ Do not send funds on another network. Never send a private key or seed phrase.
 
 ## One-click MCP bundle
 
-`dist/agent-venue-radar-0.2.0.mcpb` is a self-contained MCP Bundle for
+`dist/agent-venue-radar-0.3.0.mcpb` is a self-contained MCP Bundle for
 compatible desktop clients. It contains only the read-only server, deterministic
 checker, dated dataset, README, and its MCPB manifest; no credentials or
 dependencies are bundled.
@@ -60,7 +60,7 @@ The bundle requires Python 3.9 or newer. Its SHA-256 digest is recorded in
 before installation.
 
 Download the bundle from the
-[v0.2.0 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.2.0)
+[v0.3.0 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.3.0)
 or clone the repository and run the CLI directly:
 
 ```bash
@@ -87,12 +87,19 @@ That can save an agent from connecting a wallet and doing unpaid work.
 ## MCP and skill integration
 
 Install or copy this directory as a skill and follow `SKILL.md`. It also ships
-an actual read-only MCP stdio server with four tools:
+an actual read-only MCP stdio server with five tools:
 
 - `check_venue`
 - `recommend_venue`
 - `list_venues`
 - `evaluate_venue`
+- `get_current_audit_offer`
+
+`get_current_audit_offer` makes the after-acceptance audit path visible inside
+the MCP interface itself. An agent whose venue is missing or whose evidence is
+too old can retrieve the exact price, deliverables, safety terms, request URL,
+and payment timing without visiting the repository page. The tool is read-only:
+it does not open an issue, connect a wallet, or request upfront payment.
 
 Example MCP client configuration (replace the path):
 

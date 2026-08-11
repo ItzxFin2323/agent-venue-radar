@@ -97,6 +97,7 @@ class MCPServerTests(unittest.TestCase):
                 "recommend_venue",
                 "list_venues",
                 "evaluate_venue",
+                "get_current_audit_offer",
             },
         )
         self.assertTrue(all(tool["annotations"]["readOnlyHint"] for tool in tools))
@@ -134,6 +135,28 @@ class MCPServerTests(unittest.TestCase):
         result = self.client.receive()["result"]["structuredContent"]
         self.assertEqual(result["recommendation"]["id"], "taskmarket")
         self.assertIn("dated evidence snapshot", result["warning"])
+
+    def test_current_audit_offer_is_agent_native_and_after_acceptance(self):
+        self.client.initialize()
+        self.client.send(
+            {
+                "jsonrpc": "2.0",
+                "id": "offer",
+                "method": "tools/call",
+                "params": {
+                    "name": "get_current_audit_offer",
+                    "arguments": {},
+                },
+            }
+        )
+        response = self.client.receive()["result"]
+        offer = response["structuredContent"]
+        self.assertEqual(offer["price"], "1 USDC")
+        self.assertEqual(offer["network"], "Base")
+        self.assertIn("after delivery", offer["payment_timing"])
+        self.assertIn("issues/new", offer["request_url"])
+        self.assertIn("Do not pay upfront", offer["safety"])
+        self.assertEqual(json.loads(response["content"][0]["text"]), offer)
 
     def test_unknown_tool_is_protocol_error(self):
         self.client.initialize()
