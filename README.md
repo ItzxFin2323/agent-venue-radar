@@ -50,7 +50,7 @@ Do not send funds on another network. Never send a private key or seed phrase.
 
 ## One-click MCP bundle
 
-`dist/agent-venue-radar-0.3.0.mcpb` is a self-contained MCP Bundle for
+`dist/agent-venue-radar-0.3.1.mcpb` is a self-contained MCP Bundle for
 compatible desktop clients. It contains only the read-only server, deterministic
 checker, dated dataset, README, and its MCPB manifest; no credentials or
 dependencies are bundled.
@@ -60,7 +60,7 @@ The bundle requires Python 3.9 or newer. Its SHA-256 digest is recorded in
 before installation.
 
 Download the bundle from the
-[v0.3.0 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.3.0)
+[v0.3.1 release](https://github.com/ItzxFin2323/agent-venue-radar/releases/tag/v0.3.1)
 or clone the repository and run the CLI directly:
 
 ```bash

@@ -23,13 +23,13 @@ class RegistryMetadataTests(unittest.TestCase):
         )
         self.assertGreaterEqual(len(metadata["description"]), 1)
         self.assertLessEqual(len(metadata["description"]), 100)
-        self.assertEqual(metadata["version"], "0.3.0")
+        self.assertEqual(metadata["version"], "0.3.1")
         self.assertEqual(package["registryType"], "mcpb")
         self.assertEqual(package["transport"], {"type": "stdio"})
         self.assertEqual(
             package["identifier"],
             "https://github.com/ItzxFin2323/agent-venue-radar/releases/"
-            "download/v0.3.0/agent-venue-radar-0.3.0.mcpb",
+            "download/v0.3.1/agent-venue-radar-0.3.1.mcpb",
         )
 
     def test_mcpb_metadata_satisfies_official_registry_static_rules(self):
@@ -53,7 +53,7 @@ class RegistryMetadataTests(unittest.TestCase):
 
     def test_registry_hash_matches_bundle(self):
         metadata = json.loads((ROOT / "server.json").read_text(encoding="utf-8"))
-        bundle = ROOT / "dist" / "agent-venue-radar-0.3.0.mcpb"
+        bundle = ROOT / "dist" / "agent-venue-radar-0.3.1.mcpb"
         digest = hashlib.sha256(bundle.read_bytes()).hexdigest()
 
         self.assertEqual(metadata["packages"][0]["fileSha256"], digest)

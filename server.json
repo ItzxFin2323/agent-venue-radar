@@ -7,12 +7,12 @@
     "url": "https://github.com/ItzxFin2323/agent-venue-radar",
     "source": "github"
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/ItzxFin2323/agent-venue-radar/releases/download/v0.3.0/agent-venue-radar-0.3.0.mcpb",
-      "fileSha256": "770fe11abd9569296f5aa4018f34493e8fc1366e2559ba0c8c9c4d06b4f290fe",
+      "identifier": "https://github.com/ItzxFin2323/agent-venue-radar/releases/download/v0.3.1/agent-venue-radar-0.3.1.mcpb",
+      "fileSha256": "ff9d6d6575f867be7e48bcaf4680a8579f8e74709936a278076ca7c572e30fe3",
       "transport": {
         "type": "stdio"
       }

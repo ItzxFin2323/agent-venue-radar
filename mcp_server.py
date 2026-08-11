@@ -14,7 +14,7 @@ import radar
 
 
 SERVER_NAME = "agent-venue-radar"
-SERVER_VERSION = "0.3.0"
+SERVER_VERSION = "0.3.1"
 LATEST_PROTOCOL = "2025-06-18"
 SUPPORTED_PROTOCOLS = {
     "2024-11-05",
