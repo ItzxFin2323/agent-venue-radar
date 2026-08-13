@@ -14,7 +14,7 @@ import radar
 
 
 SERVER_NAME = "agent-venue-radar"
-SERVER_VERSION = "0.3.3"
+SERVER_VERSION = "0.3.4"
 LATEST_PROTOCOL = "2025-06-18"
 SUPPORTED_PROTOCOLS = {
     "2024-11-05",
@@ -78,20 +78,20 @@ AUDIT_REQUEST_URL = (
     "https://github.com/ItzxFin2323/agent-venue-radar/issues/new"
     "?template=custom-venue-audit.yml"
 )
-AUDIT_WALLET = "0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198"
-TASKMARKET_AGENT_ID = "59699"
+AGRENTING_AGENT_DID = "did:web:github.com:ItzxFin2323:agent-venue-radar"
+AGRENTING_CAPABILITY = "marketplace_due_diligence"
 AUDIT_OFFER_SCHEMA: dict[str, Any] = {
     "type": "object",
     "properties": {
         "service": {"type": "string"},
         "availability": {"type": "string"},
         "price": {"type": "string"},
-        "network": {"type": "string"},
+        "payment_rail": {"type": "string"},
         "payment_timing": {"type": "string"},
         "request_url": {"type": "string"},
-        "taskmarket_agent_id": {"type": "string"},
-        "taskmarket_private_invite": {"type": "string"},
-        "payment_address": {"type": "string"},
+        "agrenting_agent_did": {"type": "string"},
+        "agrenting_capability": {"type": "string"},
+        "hire_instructions": {"type": "string"},
         "deliverables": {"type": "array", "items": {"type": "string"}},
         "safety": {"type": "array", "items": {"type": "string"}},
         "disclaimer": {"type": "string"},
@@ -100,12 +100,12 @@ AUDIT_OFFER_SCHEMA: dict[str, Any] = {
         "service",
         "availability",
         "price",
-        "network",
+        "payment_rail",
         "payment_timing",
         "request_url",
-        "taskmarket_agent_id",
-        "taskmarket_private_invite",
-        "payment_address",
+        "agrenting_agent_did",
+        "agrenting_capability",
+        "hire_instructions",
         "deliverables",
         "safety",
         "disclaimer",
@@ -224,8 +224,8 @@ TOOLS: list[dict[str, Any]] = [
             "Return the paid current-evidence audit offer and intake paths when "
             "a venue is absent from the snapshot, the dated evidence is too "
             "old for a real decision, or independent live verification is "
-            "needed. Payment is requested only after delivery and acceptance. "
-            "This read-only tool never connects a wallet or submits a request."
+            "needed. The exact $0.20 service uses Agrenting pre-funded escrow. "
+            "This read-only tool never hires, connects a wallet, or moves funds."
         ),
         "inputSchema": {
             "type": "object",
@@ -322,36 +322,33 @@ def call_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
             {
                 "service": "One current AI-work venue evidence audit",
                 "availability": "First three accepted beta requests",
-                "price": "1 USDC",
-                "network": "Base",
+                "price": "$0.20",
+                "payment_rail": "Agrenting pre-funded escrow",
                 "payment_timing": (
-                    "GitHub route: direct payment only after delivery and "
-                    "requester acceptance. Taskmarket route: requester escrows "
-                    "a 1-USDC gross task at creation; Taskmarket releases the "
-                    "worker payment only on acceptance, and platform fees apply."
+                    "The buyer funds exactly $0.20 in Agrenting escrow before "
+                    "work begins. After successful delivery and settlement, "
+                    "the provider is credited $0.19 after Agrenting's 5% fee."
                 ),
                 "request_url": AUDIT_REQUEST_URL,
-                "taskmarket_agent_id": TASKMARKET_AGENT_ID,
-                "taskmarket_private_invite": (
-                    "A Taskmarket requester may create a 1-USDC-gross funded "
-                    "private bounty "
-                    "or claim task and allowlist the payment address below. "
-                    "Include only public venue evidence and tag it "
-                    "'agent-venue-radar'. Never include credentials or secrets. "
-                    "An invite is not acceptance; wait for the worker to claim "
-                    "or submit through Taskmarket. Do not also pay the direct "
-                    "wallet route."
+                "agrenting_agent_did": AGRENTING_AGENT_DID,
+                "agrenting_capability": AGRENTING_CAPABILITY,
+                "hire_instructions": (
+                    "Use the official Agrenting marketplace or hirer MCP to "
+                    "hire the agent DID above for capability "
+                    "marketplace_due_diligence at price 0.20 with output "
+                    "delivery. Include only the venue, its public URL, and the "
+                    "decision to support. The GitHub issue route is only for "
+                    "public scope questions and does not start paid work."
                 ),
-                "payment_address": AUDIT_WALLET,
                 "deliverables": [
                     "Timestamped Markdown report",
                     "Machine-readable JSON findings",
                     "Direct public sources and explicit unknowns",
                 ],
                 "safety": [
-                    "Do not pay upfront",
-                    "No wallet connection or arbitrary signature",
-                    "Never provide a seed phrase or private key",
+                    "Pay only through the stated Agrenting escrow",
+                    "Never send a direct wallet payment",
+                    "Never provide credentials, private data, or wallet secrets",
                 ],
                 "disclaimer": (
                     "Research only; no guarantee of safety, profitability, "

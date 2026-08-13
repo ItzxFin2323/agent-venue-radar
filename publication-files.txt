@@ -9,7 +9,7 @@ SKILL.md
 agents/openai.yaml
 data/venues.json
 dist/SHA256SUMS
-dist/agent-venue-radar-0.3.3.mcpb
+dist/agent-venue-radar-0.3.4.mcpb
 manifest.json
 mcp_server.py
 publication-files.txt

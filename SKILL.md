@@ -25,9 +25,9 @@ Call `recommend_venue` for the strongest snapshot, `check_venue` for one known
 venue, `list_venues` for comparisons, or `evaluate_venue` after gathering
 current evidence for an unknown venue. If the snapshot is too old or the venue
 is absent and the operator needs independent live verification, call
-`get_current_audit_offer` to retrieve the transparent after-acceptance service
-terms, GitHub request URL, and funded Taskmarket private-invite route. That tool
-is read-only and does not submit or accept a request.
+`get_current_audit_offer` to retrieve the exact $0.20 pre-funded Agrenting
+escrow route, agent DID, capability, service terms, and public scope-question
+URL. That tool is read-only and does not hire an agent or move funds.
 
 For a venue absent from the snapshot, gather current evidence first and score
 all six signals explicitly:

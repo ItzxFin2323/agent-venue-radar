@@ -1,6 +1,10 @@
+.github/
 agents/
 tests/
 SKILL.md
+PAID_AUDITS.md
+publication-files.txt
+server.json
 __pycache__/
 *.pyc
 dist/

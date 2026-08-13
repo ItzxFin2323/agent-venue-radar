@@ -136,7 +136,7 @@ class MCPServerTests(unittest.TestCase):
         self.assertEqual(result["recommendation"]["id"], "taskmarket")
         self.assertIn("dated evidence snapshot", result["warning"])
 
-    def test_current_audit_offer_is_agent_native_and_after_acceptance(self):
+    def test_current_audit_offer_routes_to_agrenting_escrow(self):
         self.client.initialize()
         self.client.send(
             {
@@ -151,17 +151,25 @@ class MCPServerTests(unittest.TestCase):
         )
         response = self.client.receive()["result"]
         offer = response["structuredContent"]
-        self.assertEqual(offer["price"], "1 USDC")
-        self.assertEqual(offer["network"], "Base")
-        self.assertIn("after delivery", offer["payment_timing"])
-        self.assertIn("escrows", offer["payment_timing"])
+        self.assertEqual(offer["price"], "$0.20")
+        self.assertEqual(offer["payment_rail"], "Agrenting pre-funded escrow")
+        self.assertIn("before work", offer["payment_timing"])
+        self.assertIn("$0.19", offer["payment_timing"])
         self.assertIn("issues/new", offer["request_url"])
-        self.assertEqual(offer["taskmarket_agent_id"], "59699")
-        self.assertIn("funded private", offer["taskmarket_private_invite"])
-        self.assertIn("allowlist", offer["taskmarket_private_invite"])
-        self.assertIn("Never include credentials", offer["taskmarket_private_invite"])
-        self.assertIn("Do not also pay", offer["taskmarket_private_invite"])
-        self.assertIn("Do not pay upfront", offer["safety"])
+        self.assertEqual(
+            offer["agrenting_agent_did"],
+            "did:web:github.com:ItzxFin2323:agent-venue-radar",
+        )
+        self.assertEqual(
+            offer["agrenting_capability"], "marketplace_due_diligence"
+        )
+        self.assertIn("price 0.20", offer["hire_instructions"])
+        self.assertIn("only for public scope", offer["hire_instructions"])
+        self.assertTrue(
+            any("Pay only through" in rule for rule in offer["safety"])
+        )
+        self.assertNotIn("taskmarket_agent_id", offer)
+        self.assertNotIn("payment_address", offer)
         self.assertEqual(json.loads(response["content"][0]["text"]), offer)
 
     def test_unknown_tool_is_protocol_error(self):

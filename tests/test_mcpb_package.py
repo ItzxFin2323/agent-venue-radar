@@ -12,7 +12,7 @@ class MCPBundleTests(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["manifest_version"], "0.3")
         self.assertEqual(manifest["name"], "agent-venue-radar")
-        self.assertEqual(manifest["version"], "0.3.3")
+        self.assertEqual(manifest["version"], "0.3.4")
         self.assertEqual(manifest["server"]["type"], "python")
         self.assertEqual(manifest["server"]["entry_point"], "mcp_server.py")
         self.assertEqual(
@@ -34,7 +34,7 @@ class MCPBundleTests(unittest.TestCase):
         self.assertTrue((ROOT / "data" / "venues.json").is_file())
 
     def test_bundle_preserves_executable_python3_entry_point(self):
-        bundle = ROOT / "dist" / "agent-venue-radar-0.3.3.mcpb"
+        bundle = ROOT / "dist" / "agent-venue-radar-0.3.4.mcpb"
         with zipfile.ZipFile(bundle) as archive:
             mode = archive.getinfo("mcp_server.py").external_attr >> 16
 

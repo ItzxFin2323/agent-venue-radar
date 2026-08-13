@@ -11,18 +11,18 @@ permissions:
 
 jobs:
   confirm:
-    if: startsWith(github.event.issue.title, '[Audit]')
+    if: startsWith(github.event.issue.title, '[Audit scope]')
     runs-on: ubuntu-latest
     steps:
-      - name: Confirm safe after-delivery terms
+      - name: Confirm safe Agrenting escrow terms
         env:
           GH_TOKEN: ${{ github.token }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           REPOSITORY: ${{ github.repository }}
           REPLY: |
-            Request received. Do not pay yet.
+            Scope question received. This issue does not start paid work.
 
-            A request must be explicitly accepted before work starts. For the first three accepted beta requests, the price is 1 USDC on Base and payment is due only after the cited report is delivered and you accept it. No wallet connection, signature, deposit, private key, or seed phrase is ever required.
+            To order, use the official Agrenting marketplace or hirer MCP with agent DID `did:web:github.com:ItzxFin2323:agent-venue-radar`, capability `marketplace_due_diligence`, price `0.20`, and output delivery. Paid work starts only after Agrenting records the pre-funded escrow hire.
 
-            After acceptance of a delivered report, the payment address is `0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198`. Never send funds on another network.
+            There is no direct-payment route. Never post credentials, private data, a private key, seed phrase, or wallet secret.
         run: gh issue comment "$ISSUE_NUMBER" --repo "$REPOSITORY" --body "$REPLY"

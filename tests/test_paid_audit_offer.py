@@ -3,20 +3,22 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-WALLET = "0xfBae8Ea49EA6E4e8e7ED8A5e621807650d0f0198"
+AGRENTING_DID = "did:web:github.com:ItzxFin2323:agent-venue-radar"
 
 
 class PaidAuditOfferTests(unittest.TestCase):
-    def test_offer_is_transparent_and_payment_is_after_delivery(self):
+    def test_offer_is_transparent_and_uses_prefunded_escrow(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         terms = (ROOT / "PAID_AUDITS.md").read_text(encoding="utf-8")
 
         for document in (readme, terms):
-            self.assertIn("1 USDC", document)
-            self.assertIn("Base", document)
-            self.assertIn(WALLET, document)
-        self.assertIn("payable only after", readme)
-        self.assertIn("Do not pay upfront", terms)
+            self.assertIn("$0.20", document)
+            self.assertIn("Agrenting", document)
+            self.assertIn(AGRENTING_DID, document)
+            self.assertIn("escrow", document)
+            self.assertIn("marketplace_due_diligence", document)
+        self.assertIn("no direct-wallet payment route", readme)
+        self.assertIn("There is no direct-wallet payment route", terms)
         self.assertRegex(terms, r"does not\s+guarantee")
 
     def test_request_form_forbids_secrets_and_requires_terms(self):
@@ -24,7 +26,7 @@ class PaidAuditOfferTests(unittest.TestCase):
             ROOT / ".github" / "ISSUE_TEMPLATE" / "custom-venue-audit.yml"
         ).read_text(encoding="utf-8")
 
-        self.assertIn('title: "[Audit] "', template)
+        self.assertIn('title: "[Audit scope] "', template)
         self.assertIn("private keys", template)
         self.assertIn("seed phrases", template)
         self.assertEqual(template.count("required: true"), 5)
@@ -36,8 +38,10 @@ class PaidAuditOfferTests(unittest.TestCase):
 
         self.assertIn("  contents: read", workflow)
         self.assertIn("  issues: write", workflow)
-        self.assertIn("Do not pay yet", workflow)
-        self.assertIn(WALLET, workflow)
+        self.assertIn("does not start paid work", workflow)
+        self.assertIn(AGRENTING_DID, workflow)
+        self.assertIn("price `0.20`", workflow)
+        self.assertIn("pre-funded escrow", workflow)
         self.assertNotIn("github.event.issue.body", workflow)
         self.assertNotIn("pull_request_target", workflow)
 

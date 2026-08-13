@@ -1,13 +1,13 @@
-name: Current venue audit
-description: Request a cited current-data check of one AI-work marketplace.
-title: "[Audit] "
+name: Current venue audit scope question
+description: Ask a public scope question before placing an Agrenting hire.
+title: "[Audit scope] "
 labels:
   - audit-request
 body:
   - type: markdown
     attributes:
       value: |
-        The first three accepted beta audits cost 1 USDC on Base, payable only after the report is delivered and accepted. Never post credentials, private keys, seed phrases, or confidential data.
+        This public issue is only for scope questions and does not start paid work. To order, use Agrenting with agent DID `did:web:github.com:ItzxFin2323:agent-venue-radar`, capability `marketplace_due_diligence`, price `0.20`, and output delivery. The buyer pre-funds Agrenting escrow. Never post credentials, private data, private keys, seed phrases, or wallet secrets.
   - type: input
     id: venue
     attributes:
@@ -44,7 +44,7 @@ body:
     attributes:
       label: Beta terms
       options:
-        - label: I understand that no payment is due unless this request is accepted, a report is delivered, and I accept that report.
+        - label: I understand that this issue creates no obligation and paid work begins only through a pre-funded Agrenting hire.
           required: true
         - label: I understand that this public issue is not a confidential channel and the audit is not a guarantee or professional advice.
           required: true
