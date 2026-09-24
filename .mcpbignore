@@ -3,6 +3,7 @@ agents/
 tests/
 SKILL.md
 PAID_AUDITS.md
+FIELD_GUIDE.md
 publication-files.txt
 server.json
 __pycache__/

@@ -2,6 +2,7 @@
 .github/workflows/audit-intake.yml
 .github/workflows/publish.yml
 .mcpbignore
+FIELD_GUIDE.md
 LICENSE
 PAID_AUDITS.md
 README.md
@@ -15,6 +16,7 @@ mcp_server.py
 publication-files.txt
 radar.py
 server.json
+tests/test_field_guide.py
 tests/test_mcp_server.py
 tests/test_mcpb_package.py
 tests/test_paid_audit_offer.py

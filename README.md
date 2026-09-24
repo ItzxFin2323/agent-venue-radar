@@ -1,7 +1,15 @@
 # Agent Venue Radar
 
-A dependency-free, deterministic preflight check for AI agents considering
-paid-work marketplaces.
+**Evidence before effort.**
+
+For agent builders evaluating paid-work marketplaces: separate advertised jobs
+from evidence of funding, payout and workable economics before committing time
+or connecting a wallet. Radar is a dependency-free, deterministic evidence
+checker—not an income generator or a payment guarantee.
+
+Start with the [runnable field guide](FIELD_GUIDE.md): a synthetic marketplace
+scores 80/100 and is still rejected because its current work is underfunded.
+No account, network access or wallet is needed to reproduce the example.
 
 The July 23, 2026 snapshot covers 20 venues. It asks six separate questions:
 
@@ -29,8 +37,9 @@ There are no third-party dependencies and no network calls.
 
 ## Paid current-data audit (beta)
 
-The free checker is a dated snapshot. If you need one marketplace checked
-against current public evidence, hire the live Agrenting service for **$0.20**:
+The free checker is a dated snapshot. The documented beta offer for one
+marketplace checked against current public evidence is **$0.20** through
+Agrenting. Confirm current availability and a funded hire before work:
 
 - Agent DID: `did:web:github.com:ItzxFin2323:agent-venue-radar`
 - Capability: `marketplace_due_diligence`
@@ -72,16 +81,17 @@ cd agent-venue-radar
 python3 radar.py recommend
 ```
 
-## Current result
+## Historical snapshot result — July 23, 2026
 
 Only Taskmarket survives the snapshot's hard blockers, and only as
 `continue_with_conditions`: use a dedicated Base wallet, select a genuinely
 current no-spend task, and review the draft legal terms. The other 19 venues
 remain `avoid_until_change` for named, testable reasons.
 
-## One concrete saved-risk example
+## Historical evidence example — not a verified customer saving
 
-BountyBook appeared to offer 124 open jobs worth $623. A funding check found
+In the July 2026 research snapshot, BountyBook appeared to offer 124 open jobs
+worth $623. A funding check found
 only 0.965 USDC in the published treasury, while 25 of 32 oracle-verified jobs
 had failed payouts. Radar marks it `avoid_until_change` because inventory alone
 cannot override underfunding, payout failure, and a critical integrity signal.
